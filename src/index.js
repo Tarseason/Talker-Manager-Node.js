@@ -1,6 +1,8 @@
 const express = require('express');
+const { rmSync } = require('fs');
 const fs = require('fs').promises;
 const path = require('path');
+const getToken = require('./utils/getToken');
 
 const app = express();
 app.use(express.json());
@@ -36,6 +38,13 @@ app.get('/talker/:id', async (req, res) => {
     return res.status(404).send({ message: 'Pessoa palestrante não encontrada' });
   }
   res.status(200).json(talker);
+});
+
+app.post('/login', async (req, res) => {
+  // const { email, password } = req.body;
+  
+  const token = getToken();
+  res.status(200).json({ token });
 });
 
 app.listen(PORT, () => {
