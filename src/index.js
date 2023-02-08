@@ -96,13 +96,14 @@ isRegister.isTalkRate,
   res.status(200).json(talkEdit);
 });
 
-// app.delete('/talker/:id', isRegister.authorizationF, async (req, res) => {
-//   const { id } = req.params;
-//   const talkers = await readFile();
-//   const newTalkers = talkers.filter((talk) => talk.id !== +id);
-//   await fs.writeFile(talkersPath, newTalkers);
-//   return res.status(204).json();
-// });
+app.delete('/talker/:id', isRegister.authorizationF, async (req, res) => {
+  const { id } = req.params;
+  const talkers = await readFile();
+  const newTalkers = talkers.filter((talk) => talk.id !== +id);
+  const talkersNow = JSON.stringify(newTalkers);
+  await fs.writeFile(talkersPath, talkersNow);
+  res.status(204).end();
+});
 
 app.listen(PORT, () => {
   console.log('Online');
