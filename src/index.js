@@ -74,6 +74,36 @@ app.post('/talker',
   res.status(201).json(newTalker);
 });
 
+app.put('/talker/:id', 
+isRegister.authorizationF,
+isRegister.isName,
+isRegister.isAge,
+isRegister.isTalkWatch,
+isRegister.isTalkRate,
+ async (req, res) => {
+  const { id } = req.params;
+  const { name, age } = req.body;
+  const { watchedAt, rate } = req.body.talk;
+
+  const talkers = await readFile(); 
+
+  let talkEdit = talkers.find((talk) => talk.id === +id);
+  const newTalkers = talkers.filter((element) => element.id !== talkEdit.id);
+  talkEdit = { id: +id, name, age, talk: { watchedAt, rate } };
+  const updateTalkers = JSON.stringify([...newTalkers, talkEdit]);
+  await fs.writeFile(talkersPath, updateTalkers);
+
+  res.status(200).json(talkEdit);
+});
+
+// app.delete('/talker/:id', isRegister.authorizationF, async (req, res) => {
+//   const { id } = req.params;
+//   const talkers = await readFile();
+//   const newTalkers = talkers.filter((talk) => talk.id !== +id);
+//   await fs.writeFile(talkersPath, newTalkers);
+//   return res.status(204).json();
+// });
+
 app.listen(PORT, () => {
   console.log('Online');
 });
