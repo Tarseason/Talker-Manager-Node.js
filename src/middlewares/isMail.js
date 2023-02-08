@@ -8,7 +8,9 @@ module.exports = (req, res, next) => {
     });
   }
 
-  if (!valEmail.test(email)) {
+  const testResult = valEmail.test(email);
+
+  if (!testResult) {
     return res.status(400).json({
       message: 'O "email" deve ter o formato "email@email.com"',
     });

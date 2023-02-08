@@ -3,6 +3,7 @@ const fs = require('fs').promises;
 const path = require('path');
 const isMail = require('./middlewares/isMail');
 const isPassword = require('./middlewares/isPassword');
+const isRegister = require('./middlewares/isRegister');
 const getToken = require('./utils/getToken');
 
 const app = express();
@@ -44,9 +45,33 @@ app.get('/talker/:id', async (req, res) => {
 app.post('/login',
   isMail,
   isPassword,
-  async (req, res) => {  
+  async (req, res) => { 
   const token = getToken();
   res.status(200).json({ token });
+});
+
+app.post('/talker',
+  isRegister.authorizationF,
+  isRegister.isName,
+  isRegister.isAge,
+  isRegister.isTalkWatch,
+  isRegister.isTalkRate,
+  async (req, res) => {
+  const { name, age } = req.body;
+  const { watchedAt, rate } = req.body.talk;
+  const talkers = await readFile();
+  const newTalker = {
+    name,
+    age,
+    id: talkers[talkers.length - 1].id + 1,
+    talk: {
+      watchedAt,
+      rate,
+    },
+  };
+  const allTalkers = JSON.stringify([...talkers, newTalker]);
+  await fs.writeFile(talkersPath, allTalkers);
+  res.status(201).json(newTalker);
 });
 
 app.listen(PORT, () => {
