@@ -28,6 +28,27 @@ app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
 });
 
+app.get('/talker/search', isRegister.authorizationF, async (req, res) => {
+  const result = await readFile();
+  const { q } = req.query;
+
+  if (!q) {
+    return res.status(200).json(result);
+  }
+
+  const talkersSearch = result.some((talk) => talk.name.toLowerCase()
+    .includes(q.toLowerCase()));
+
+  if (!talkersSearch) {
+    return res.status(200).json([]);
+  }
+
+  const search = result.filter((talk) => talk.name.toLowerCase()
+    .includes(q.toLowerCase()));
+
+  res.status(200).json(search);
+});
+
 app.get('/talker', async (req, res) => {
   const talkers = await readFile();
     return res.status(200).json(talkers);
