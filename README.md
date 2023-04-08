@@ -1,10 +1,22 @@
-# :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+# TALKER MANAGER 👺
+  Foi construido um CRUD de uma API de palestrantes.
+  Criando alguns Endpoints que irao ler e escrever em um arquivo utilizando o modulo fs.
+## Stacks:
+**Back-end:** Node | Express | Docker  | JavaScript
+## Endpoints:
+- get  `/talker`
+- get  `/talker/:id`
+- post `/login`
+- post `/talker`
+- put `/talker`
+- put `/talker/:id`
+- delete `/talker/:id`
+## Instalação
+Instale Store Manager no seu terminal:
+```bash
+  git clone git@github.com:Tarseason/Talker-Manager-Node.js.git
+  docker-compose up -d
+  docker exec -it talker_manager bash
+  npm install
+  npm start ou npm run dev
+```
